@@ -11,7 +11,7 @@ const TypeAnimation = dynamic(() => import("react-type-animation").then((mod) =>
 // 高级粒子系统
 function AdvancedParticleSystem() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number | undefined>(undefined);
   const mouseRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -269,10 +269,10 @@ function DynamicLightBackground() {
 function AdvancedMouseFollower() {
   const glowRef = useRef<HTMLDivElement>(null);
   const trailRef = useRef<HTMLDivElement>(null);
-  const quickToX = useRef<gsap.QuickToFunc>();
-  const quickToY = useRef<gsap.QuickToFunc>();
-  const trailX = useRef<gsap.QuickToFunc>();
-  const trailY = useRef<gsap.QuickToFunc>();
+  const quickToX = useRef<gsap.QuickToFunc | undefined>(undefined);
+  const quickToY = useRef<gsap.QuickToFunc | undefined>(undefined);
+  const trailX = useRef<gsap.QuickToFunc | undefined>(undefined);
+  const trailY = useRef<gsap.QuickToFunc | undefined>(undefined);
 
   useEffect(() => {
     if (!glowRef.current || !trailRef.current) return;

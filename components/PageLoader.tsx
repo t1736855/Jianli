@@ -141,7 +141,7 @@ export default function PageLoader() {
             className="absolute bottom-1/3 right-1/3 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-cyan-500/20 to-blue-500/20 blur-[150px]"
           />
 
-          <div ref={logoRef} className="text-center relative z-10" style={{ transformPerspective: "1000px" }}>
+          <div ref={logoRef} className="text-center relative z-10" style={{ perspective: "1000px" }}>
             <span
               ref={logoTextRef}
               className="text-8xl font-display font-semibold tracking-tight text-foreground"
