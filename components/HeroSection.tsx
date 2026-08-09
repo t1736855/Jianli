@@ -43,7 +43,10 @@ function AdvancedParticleSystem() {
 
     const colors = ["#2563EB", "#7C3AED", "#06B6D4", "#a18cd1", "#f093fb", "#4facfe", "#43e97b"];
 
-    for (let i = 0; i < 120; i++) {
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    const particleCount = isMobile ? 35 : 120;
+
+    for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
@@ -124,25 +127,27 @@ function AdvancedParticleSystem() {
 
         ctx.restore();
 
-        // 连线效果
-        particles.forEach((other) => {
-          const dx2 = particle.x - other.x;
-          const dy2 = particle.y - other.y;
-          const distance = Math.sqrt(dx2 * dx2 + dy2 * dy2);
+        // 连线效果 (仅桌面端绘制以提升移动端流畅度)
+        if (!isMobile) {
+          particles.forEach((other) => {
+            const dx2 = particle.x - other.x;
+            const dy2 = particle.y - other.y;
+            const distance = Math.sqrt(dx2 * dx2 + dy2 * dy2);
 
-          if (distance < 180 && distance > 0) {
-            ctx.beginPath();
-            ctx.moveTo(particle.x, particle.y);
-            ctx.lineTo(other.x, other.y);
-            const lineGradient = ctx.createLinearGradient(particle.x, particle.y, other.x, other.y);
-            lineGradient.addColorStop(0, particle.color);
-            lineGradient.addColorStop(1, other.color);
-            ctx.strokeStyle = lineGradient;
-            ctx.globalAlpha = (1 - distance / 180) * 0.2;
-            ctx.lineWidth = 1.5;
-            ctx.stroke();
-          }
-        });
+            if (distance < 180 && distance > 0) {
+              ctx.beginPath();
+              ctx.moveTo(particle.x, particle.y);
+              ctx.lineTo(other.x, other.y);
+              const lineGradient = ctx.createLinearGradient(particle.x, particle.y, other.x, other.y);
+              lineGradient.addColorStop(0, particle.color);
+              lineGradient.addColorStop(1, other.color);
+              ctx.strokeStyle = lineGradient;
+              ctx.globalAlpha = (1 - distance / 180) * 0.2;
+              ctx.lineWidth = 1.5;
+              ctx.stroke();
+            }
+          });
+        }
       });
 
       animationRef.current = requestAnimationFrame(animate);
