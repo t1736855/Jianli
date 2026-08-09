@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  output: 'export',
+  basePath: '/jianli',
   images: {
-    domains: [],
+    unoptimized: true,
   },
 };
 
