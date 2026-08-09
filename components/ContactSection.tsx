@@ -5,10 +5,10 @@ import { motion } from "framer-motion";
 import { Mail, Github, MessageSquare, Copy, Check, Phone, MapPin, Send, ExternalLink, ArrowUp, Clock, Coffee, Heart } from "lucide-react";
 
 const socialLinks = [
-  { icon: MessageSquare, label: "微信", value: "YunJie_Cloud", copyable: true, desc: "扫码或搜索添加", gradient: "from-green-500 to-emerald-500" },
-  { icon: Mail, label: "邮箱", value: "yunjie.cloud@example.com", href: "mailto:yunjie.cloud@example.com", copyable: true, desc: "24h 内回复", gradient: "from-blue-500 to-indigo-500" },
-  { icon: Github, label: "GitHub", value: "github.com/zhangyunjie", href: "https://github.com", copyable: false, desc: "开源项目与贡献", gradient: "from-gray-700 to-gray-900" },
-  { icon: ExternalLink, label: "掘金", value: "juejin.cn/@zhangyunjie", href: "https://juejin.cn", copyable: false, desc: "技术博客文章", gradient: "from-blue-400 to-blue-600" },
+  { icon: MessageSquare, label: "微信", value: "YunJie_Cloud", copyable: true, desc: "扫码或搜索添加" },
+  { icon: Mail, label: "邮箱", value: "yunjie.cloud@example.com", href: "mailto:yunjie.cloud@example.com", copyable: true, desc: "24h 内回复" },
+  { icon: Github, label: "GitHub", value: "github.com/zhangyunjie", href: "https://github.com", copyable: false, desc: "开源项目与贡献" },
+  { icon: ExternalLink, label: "掘金", value: "juejin.cn/@zhangyunjie", href: "https://juejin.cn", copyable: false, desc: "技术博客文章" },
 ];
 
 const contactInfo = [
@@ -24,28 +24,6 @@ const faq = [
   { q: "可以技术交流吗？", a: "非常欢迎！我热爱技术交流，可以通过微信或邮件联系我。" },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut",
-    },
-  },
-};
-
 export default function ContactSection() {
   const [copiedItem, setCopiedItem] = useState<string | null>(null);
 
@@ -60,253 +38,174 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="section bg-muted/30 relative overflow-hidden">
-      <div className="blob-1" style={{ bottom: "-15%", right: "-10%" }} />
-      <div className="blob-3" style={{ top: "10%", left: "-5%" }} />
-
-      {/* 网格背景 */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.03]"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(37, 99, 235, 0.15) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(37, 99, 235, 0.15) 1px, transparent 1px)
-          `,
-          backgroundSize: "60px 60px",
-        }}
-      />
-
+    <section id="contact" className="section relative border-t border-white/5">
       <div className="container-main relative z-10">
         {/* 标题 */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <div className="badge mb-4">
+          <div className="badge mb-3">
             <Mail className="w-3.5 h-3.5" />
             Contact
           </div>
-          <h2 className="heading-display text-4xl md:text-5xl text-foreground mb-4">
-            <span className="gradient-text-accent">联系我</span>
+          <h2 className="heading-display text-3xl sm:text-4xl text-foreground mb-3 tracking-tight">
+            <span className="gradient-text">联系我</span>
           </h2>
-          <p className="text-muted-foreground max-w-lg mx-auto text-lg">期待与您交流云计算技术，探讨职业发展机会</p>
+          <p className="text-muted-foreground max-w-lg mx-auto text-sm sm:text-base">
+            期待与您交流云计算技术，探讨职业发展机会
+          </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-8 mb-16">
-          {/* 个人卡片 */}
+        <div className="grid lg:grid-cols-3 gap-6 mb-12">
+          {/* 个人联系方式卡片 */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="lg:col-span-1 space-y-5"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="lg:col-span-1 space-y-4"
           >
-            <div className="card-flat p-8 hover-glow">
-              <motion.div
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                className="w-20 h-20 rounded-2xl bg-gradient-accent text-white flex items-center justify-center text-3xl font-display font-semibold mb-5 shadow-xl"
-              >
+            <div className="card p-6">
+              <div className="w-14 h-14 rounded-2xl bg-blue-600/20 border border-blue-500/30 text-blue-400 flex items-center justify-center text-xl font-bold mb-4">
                 张
-              </motion.div>
-              <h3 className="text-2xl font-semibold text-foreground mb-2">张云阶</h3>
-              <p className="text-muted-foreground text-base mb-2">云计算技术应用</p>
-              <p className="text-muted-foreground text-base mb-6">重庆商务职业学院</p>
-              <div className="space-y-4">
+              </div>
+              <h3 className="text-xl font-bold text-foreground mb-1">张云阶</h3>
+              <p className="text-xs font-mono text-muted-foreground mb-4">云计算技术应用 · 重庆商务职业学院</p>
+
+              <div className="space-y-3 pt-3 border-t border-white/5">
                 {contactInfo.map((item) => (
-                  <motion.div
-                    key={item.label}
-                    whileHover={{ x: 10 }}
-                    className="flex items-center gap-4"
-                  >
-                    <div className="w-10 h-10 rounded-xl bg-gradient-accent flex items-center justify-center flex-shrink-0 shadow-lg">
-                      <item.icon className="w-5 h-5 text-white" />
+                  <div key={item.label} className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-blue-400 flex-shrink-0">
+                      <item.icon className="w-4 h-4" />
                     </div>
                     <div>
-                      <div className="text-xs text-muted-foreground font-mono">{item.label}</div>
-                      <div className="text-base text-foreground font-medium">{item.value}</div>
+                      <div className="text-[10px] text-muted-foreground font-mono">{item.label}</div>
+                      <div className="text-xs text-foreground font-medium">{item.value}</div>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
 
-            <div className="card-flat p-6 bg-foreground text-white noise hover-glow">
-              <div className="flex items-center gap-3 mb-3">
-                <Coffee className="w-5 h-5" />
-                <h4 className="font-semibold text-base">开放合作</h4>
+            <div className="card p-5 bg-gradient-to-br from-blue-950/20 via-zinc-900 to-zinc-900 border-blue-500/20">
+              <div className="flex items-center gap-2 mb-2">
+                <Coffee className="w-4 h-4 text-blue-400" />
+                <h4 className="font-bold text-xs text-foreground">开放合作</h4>
               </div>
-              <p className="text-sm text-white/60 leading-relaxed">
+              <p className="text-xs text-muted-foreground leading-relaxed">
                 欢迎实习/全职、技术交流、项目合作、开源协作
               </p>
-            </div>
-
-            <div className="card-flat p-6 hover-glow">
-              <div className="flex items-center gap-3 mb-4">
-                <Heart className="w-5 h-5 text-red-500" />
-                <h4 className="font-semibold text-base text-foreground">兴趣爱好</h4>
-              </div>
-              <div className="flex flex-wrap gap-3">
-                {["开源社区", "技术写作", "云计算", "容器化", "自动化", "Linux"].map((hobby) => (
-                  <span key={hobby} className="px-3 py-1.5 rounded-full bg-muted text-sm text-muted-foreground hover:bg-accent hover:text-white transition-colors cursor-default">
-                    {hobby}
-                  </span>
-                ))}
-              </div>
             </div>
           </motion.div>
 
           {/* 社交链接 */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            className="lg:col-span-2 grid md:grid-cols-2 gap-5"
-          >
+          <div className="lg:col-span-2 grid sm:grid-cols-2 gap-4">
             {socialLinks.map((link, i) => {
               const isCopied = copiedItem === link.label;
               return (
                 <motion.div
                   key={i}
-                  variants={itemVariants}
-                  whileHover={{ y: -10, scale: 1.03 }}
-                  className="card-glow p-6 cursor-pointer"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.08 }}
+                  className="card p-5 flex flex-col justify-between"
                   onClick={() => {
                     if (link.copyable) handleCopy(link.value, link.label);
                     else if (link.href) window.open(link.href, "_blank");
                   }}
                 >
-                  <div className="flex items-start justify-between mb-4">
-                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${link.gradient} flex items-center justify-center shadow-lg`}>
-                      <link.icon className="w-6 h-6 text-white" />
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center">
+                        <link.icon className="w-4.5 h-4.5" />
+                      </div>
+                      {link.copyable && (
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-mono ${
+                          isCopied ? "bg-emerald-500/20 text-emerald-400" : "bg-white/5 text-zinc-400"
+                        }`}>
+                          {isCopied ? "已复制" : "点击复制"}
+                        </span>
+                      )}
                     </div>
-                    {link.copyable && (
-                      <span className={`px-3 py-1 rounded-full text-xs font-mono transition-colors ${
-                        isCopied ? "bg-emerald-50 text-emerald-600" : "bg-muted text-muted-foreground"
-                      }`}>
-                        {isCopied ? "已复制" : "点击复制"}
-                      </span>
-                    )}
+                    <h3 className="text-sm font-bold text-foreground mb-1">{link.label}</h3>
+                    <p className="text-xs text-muted-foreground mb-2">{link.desc}</p>
+                    <p className="text-xs font-mono text-zinc-300 break-all mb-4">{link.value}</p>
                   </div>
-                  <h3 className="text-lg font-semibold text-foreground mb-1">{link.label}</h3>
-                  <p className="text-sm text-muted-foreground mb-2">{link.desc}</p>
-                  <p className="text-sm text-muted-foreground font-mono break-all mb-4">{link.value}</p>
+
                   {link.copyable ? (
-                    <button className={`w-full py-3 rounded-xl flex items-center justify-center gap-2 text-sm font-medium transition-all ${
-                      isCopied ? "bg-emerald-50 text-emerald-600" : "bg-muted text-muted-foreground hover:bg-muted/80"
+                    <button className={`w-full py-2 rounded-lg flex items-center justify-center gap-1.5 text-xs font-mono transition-all ${
+                      isCopied ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" : "bg-white/5 text-zinc-300 hover:bg-white/10 border border-white/10"
                     }`}>
-                      {isCopied ? <><Check className="w-4 h-4" /> 已复制</> : <><Copy className="w-4 h-4" /> 复制</>}
+                      {isCopied ? <><Check className="w-3.5 h-3.5" /> 已复制</> : <><Copy className="w-3.5 h-3.5" /> 复制</>}
                     </button>
                   ) : (
-                    <button className="w-full py-3 rounded-xl bg-muted text-muted-foreground hover:bg-muted/80 flex items-center justify-center gap-2 text-sm font-medium transition-all">
-                      <ExternalLink className="w-4 h-4" /> 访问
+                    <button className="w-full py-2 rounded-lg bg-white/5 text-zinc-300 hover:bg-white/10 border border-white/10 flex items-center justify-center gap-1.5 text-xs font-mono transition-all">
+                      <ExternalLink className="w-3.5 h-3.5" /> 访问
                     </button>
                   )}
                 </motion.div>
               );
             })}
-          </motion.div>
+          </div>
         </div>
 
         {/* 常见问题 */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mb-16"
-        >
-          <h3 className="text-xl font-semibold text-foreground mb-8 text-center">常见问题</h3>
-          <div className="grid md:grid-cols-3 gap-5">
+        <div className="mb-12">
+          <h3 className="text-sm font-mono text-zinc-400 uppercase tracking-wider mb-6 text-center">常见问题</h3>
+          <div className="grid md:grid-cols-3 gap-4">
             {faq.map((item, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: i * 0.1, ease: "easeOut" }}
-                whileHover={{ y: -8, scale: 1.03 }}
-                className="card p-6 hover-glow"
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.08 }}
+                className="card p-5"
               >
-                <h4 className="text-base font-semibold text-foreground mb-3">{item.q}</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">{item.a}</p>
+                <h4 className="text-xs font-bold text-foreground mb-2">{item.q}</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">{item.a}</p>
               </motion.div>
             ))}
           </div>
-        </motion.div>
+        </div>
 
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="card-flat p-10 md:p-14 text-center mb-16 bg-foreground text-white noise relative overflow-hidden hover-glow"
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-foreground via-foreground to-foreground/90" />
-          <div className="relative z-10">
-            <h3 className="heading-display text-3xl md:text-4xl mb-4">让我们一起创造价值</h3>
-            <p className="text-white/60 text-base mb-10 max-w-lg mx-auto">
-              如果您对我的技能和经验感兴趣，欢迎随时联系我。<br />
-              我通常在 24 小时内回复。
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.a
-                href="mailto:yunjie.cloud@example.com"
-                whileHover={{ scale: 1.1, y: -4 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-10 py-4 rounded-full bg-white text-foreground font-medium text-base inline-flex items-center justify-center gap-2 hover:bg-white/90 transition-colors"
-              >
-                <Mail className="w-5 h-5" /> 发送邮件
-              </motion.a>
-              <motion.button
-                whileHover={{ scale: 1.1, y: -4 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => handleCopy("YunJie_Cloud", "微信")}
-                className="px-10 py-4 rounded-full bg-white/10 border border-white/20 text-white font-medium text-base hover:bg-white/20 transition-all inline-flex items-center justify-center gap-2"
-              >
-                <MessageSquare className="w-5 h-5" /> 复制微信号
-              </motion.button>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Footer */}
-        <footer className="pt-10 border-t border-border">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-5">
-            <div className="flex items-center gap-4">
-              <span className="text-xl font-display font-semibold">
-                YJ<span className="gradient-text-accent">.</span>
+        {/* 底部 Footer */}
+        <footer className="pt-8 border-t border-white/5">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <span className="text-sm font-mono font-bold">
+                YJ<span className="text-blue-500">.</span>
               </span>
-              <span className="text-border">|</span>
-              <span className="text-sm text-muted-foreground">&copy; 2026 张云阶</span>
+              <span className="text-zinc-700">|</span>
+              <span className="text-xs text-muted-foreground font-mono">&copy; 2026 张云阶</span>
             </div>
-            <div className="flex items-center gap-5 text-sm">
+            <div className="flex items-center gap-4 text-xs font-mono">
               {["首页", "教育", "技能", "项目", "联系"].map((label, i) => (
                 <a
                   key={i}
                   href={`#${["home", "education", "skills", "projects", "contact"][i]}`}
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-zinc-400 hover:text-white transition-colors"
                 >
                   {label}
                 </a>
               ))}
             </div>
-            <div className="flex items-center gap-4">
-              <span className="flex items-center gap-2 text-xs text-muted-foreground font-mono">
-                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+            <div className="flex items-center gap-3">
+              <span className="text-[10px] text-zinc-500 font-mono">
                 Next.js + Tailwind + Framer Motion + GSAP
               </span>
               <motion.button
-                whileHover={{ scale: 1.15, y: -3 }}
+                whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={scrollToTop}
-                className="p-3 rounded-xl border border-border text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+                className="p-2 rounded-lg border border-white/10 text-zinc-400 hover:text-white hover:bg-white/5 transition-colors"
               >
-                <ArrowUp className="w-4 h-4" />
+                <ArrowUp className="w-3.5 h-3.5" />
               </motion.button>
             </div>
           </div>

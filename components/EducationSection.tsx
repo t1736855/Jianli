@@ -43,258 +43,188 @@ const education = {
   ],
 };
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut",
-    },
-  },
-};
-
 export default function EducationSection() {
   return (
-    <section id="education" className="section relative overflow-hidden">
+    <section id="education" className="section relative border-t border-black/5 bg-white/40 backdrop-blur-sm">
       <div className="container-main">
-        {/* 装饰性背景 */}
-        <div className="blob-2" style={{ top: "-10%", right: "-5%" }} />
-        <div className="blob-3" style={{ bottom: "-10%", left: "-5%" }} />
-
-        {/* 网格背景 */}
-        <div
-          className="absolute inset-0 pointer-events-none opacity-[0.03]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(37, 99, 235, 0.15) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(37, 99, 235, 0.15) 1px, transparent 1px)
-            `,
-            backgroundSize: "60px 60px",
-          }}
-        />
-
         {/* 标题 */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <div className="badge mb-4">
+          <div className="badge mb-3">
             <GraduationCap className="w-3.5 h-3.5" />
             Education
           </div>
-          <h2 className="heading-display text-4xl md:text-5xl text-foreground mb-4">
-            <span className="gradient-text-accent">教育背景</span>
+          <h2 className="heading-display text-3xl sm:text-4xl text-gray-900 mb-3 tracking-tight">
+            教育背景
           </h2>
-          <p className="text-muted-foreground max-w-lg mx-auto text-lg">扎实的云计算专业基础，丰富的实践经验</p>
+          <p className="text-gray-500 max-w-lg mx-auto text-sm sm:text-base font-light">
+            扎实的云计算专业基础，丰富的实践经验
+          </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-8 mb-16">
-          {/* 学校信息 */}
+        <div className="grid lg:grid-cols-3 gap-6 mb-12">
+          {/* 学校信息卡片 */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="lg:col-span-2 card-flat p-5 sm:p-8 hover-glow"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="lg:col-span-2 card p-6 sm:p-8 flex flex-col justify-between"
           >
-            <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4 sm:gap-5 mb-6 sm:mb-8">
-              <motion.div
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                className="w-16 h-16 rounded-xl bg-gradient-accent flex items-center justify-center flex-shrink-0 shadow-xl"
-              >
-                <GraduationCap className="w-8 h-8 text-white" />
-              </motion.div>
-              <div className="flex-1">
-                <h3 className="text-xl sm:text-2xl font-semibold text-foreground mb-2">{education.school}</h3>
-                <p className="text-muted-foreground text-sm sm:text-base mb-4">{education.englishName}</p>
-                <div className="flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-3">
-                  <span className="px-3 sm:px-4 py-1.5 rounded-full bg-accent/10 text-accent text-xs sm:text-sm font-medium">{education.major}</span>
-                  <span className="px-3 sm:px-4 py-1.5 rounded-full bg-muted text-muted-foreground text-xs sm:text-sm inline-flex items-center gap-1.5">
-                    <Calendar className="w-3.5 h-3.5" /> {education.period}
-                  </span>
-                  <span className="px-3 sm:px-4 py-1.5 rounded-full bg-muted text-muted-foreground text-xs sm:text-sm inline-flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5" /> {education.location}
-                  </span>
+            <div>
+              <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-5 mb-6">
+                <div className="w-14 h-14 rounded-xl bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 shadow-sm">
+                  <GraduationCap className="w-7 h-7" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold text-gray-900 mb-1">{education.school}</h3>
+                  <p className="text-gray-400 text-xs font-mono mb-3">{education.englishName}</p>
+                  <div className="flex flex-wrap justify-center sm:justify-start gap-2">
+                    <span className="tag !bg-blue-50 !text-blue-600 !border-blue-100 font-semibold">{education.major}</span>
+                    <span className="tag inline-flex items-center gap-1">
+                      <Calendar className="w-3 h-3 text-gray-400" /> {education.period}
+                    </span>
+                    <span className="tag inline-flex items-center gap-1">
+                      <MapPin className="w-3 h-3 text-gray-400" /> {education.location}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-              {[
-                { label: "GPA", value: education.gpa, icon: "📊" },
-                { label: "排名", value: education.rank, icon: "🏆" },
-                { label: "活动", value: "4+", icon: "🎯" },
-              ].map((stat) => (
-                <motion.div
-                  key={stat.label}
-                  whileHover={{ y: -6, scale: 1.05 }}
-                  className="p-5 rounded-xl bg-gradient-to-br from-muted/50 to-muted hover:from-accent/5 hover:to-accent/10 text-center transition-all hover:shadow-lg"
-                >
-                  <div className="text-2xl mb-2">{stat.icon}</div>
-                  <div className="text-xl font-semibold text-foreground stat-number">{stat.value}</div>
-                  <div className="text-sm text-muted-foreground">{stat.label}</div>
-                </motion.div>
-              ))}
+              <div className="grid grid-cols-3 gap-3 mt-6 pt-6 border-t border-gray-100">
+                {[
+                  { label: "GPA", value: education.gpa, icon: "📊" },
+                  { label: "排名", value: education.rank, icon: "🏆" },
+                  { label: "活动", value: "4+", icon: "🎯" },
+                ].map((stat) => (
+                  <div key={stat.label} className="p-3 rounded-xl bg-gray-50 border border-gray-100 text-center">
+                    <div className="text-lg mb-1">{stat.icon}</div>
+                    <div className="text-sm font-bold text-gray-900 stat-number">{stat.value}</div>
+                    <div className="text-[10px] text-gray-400 font-mono">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </motion.div>
 
           {/* 校园活动 */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="card-flat p-8 bg-foreground text-white noise hover-glow"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="card p-6 flex flex-col justify-between"
           >
-            <h4 className="text-xl font-semibold mb-6">校园活动</h4>
-            <div className="space-y-4">
-              {education.activities.map((activity, i) => (
-                <motion.div
-                  key={i}
-                  whileHover={{ x: 10 }}
-                  className="flex items-center gap-4"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
-                    <activity.icon className="w-5 h-5" />
+            <div>
+              <h4 className="text-xs font-mono text-gray-400 uppercase tracking-widest mb-4">校园活动</h4>
+              <div className="space-y-3">
+                {education.activities.map((activity, i) => (
+                  <div key={i} className="flex items-center gap-3 p-2.5 rounded-lg bg-gray-50 border border-gray-100">
+                    <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0">
+                      <activity.icon className="w-4 h-4" />
+                    </div>
+                    <span className="text-xs text-gray-700 font-medium">{activity.text}</span>
                   </div>
-                  <span className="text-base text-white/80">{activity.text}</span>
-                </motion.div>
-              ))}
+                ))}
+              </div>
             </div>
           </motion.div>
         </div>
 
-        {/* 时间线 */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mb-16"
-        >
-          <h3 className="text-xl font-semibold text-foreground mb-8 flex items-center gap-3">
-            <Calendar className="w-6 h-6 text-accent" />
+        {/* 成长历程 Timeline */}
+        <div className="mb-12">
+          <h3 className="text-xs font-mono text-gray-400 mb-6 flex items-center gap-2 uppercase tracking-widest">
+            <Calendar className="w-4 h-4 text-blue-600" />
             成长历程
           </h3>
-          <div className="relative pl-12">
-            <div className="timeline-line" />
-            <div className="space-y-8">
-              {education.timeline.map((item, i) => (
+          <div className="relative pl-6 border-l border-gray-200 space-y-6">
+            {education.timeline.map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
+                className="relative group"
+              >
+                <div
+                  className={`absolute -left-[31px] top-1.5 w-2.5 h-2.5 rounded-full border-2 ${
+                    item.highlight ? "bg-blue-600 border-blue-400 shadow-[0_0_8px_rgba(37,99,235,0.4)]" : "bg-gray-300 border-gray-200"
+                  }`}
+                />
+                <div className={`p-4 rounded-xl border transition-all ${
+                  item.highlight ? "bg-blue-50/50 border-blue-200/80 shadow-sm" : "bg-white border-gray-100"
+                }`}>
+                  <span className="text-xs font-mono text-blue-600 font-semibold">{item.year}</span>
+                  <p className="text-sm text-gray-800 mt-1 font-medium">{item.event}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* 荣誉奖项与课程 */}
+        <div className="grid lg:grid-cols-2 gap-6">
+          {/* 荣誉奖项 */}
+          <div className="space-y-4">
+            <h3 className="text-xs font-mono text-gray-400 flex items-center gap-2 uppercase tracking-widest mb-4">
+              <Award className="w-4 h-4 text-blue-600" />
+              荣誉奖项
+            </h3>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {education.honors.map((honor, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6, delay: i * 0.1, ease: "easeOut" }}
-                  className="relative"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.08 }}
+                  className="card p-4"
                 >
-                  <div className="timeline-dot absolute -left-12 top-2" />
-                  <motion.div
-                    whileHover={{ x: 10, scale: 1.02 }}
-                    className={`p-5 rounded-xl ${item.highlight ? "bg-accent/5 border border-accent/10" : "bg-muted/30"}`}
-                  >
-                    <span className="text-sm font-mono text-accent">{item.year}</span>
-                    <p className="text-base text-foreground mt-2">{item.event}</p>
-                  </motion.div>
+                  <div className="text-xs text-blue-600 font-mono mb-1 font-semibold">{honor.year}</div>
+                  <h4 className="text-sm font-bold text-gray-900 mb-1">{honor.title}</h4>
+                  <p className="text-xs text-gray-500">{honor.desc}</p>
                 </motion.div>
               ))}
             </div>
           </div>
-        </motion.div>
 
-        {/* 荣誉奖项 */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mb-16"
-        >
-          <div className="flex items-center gap-3 mb-8">
-            <Award className="w-6 h-6 text-accent" />
-            <h3 className="text-xl font-semibold text-foreground">荣誉奖项</h3>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {education.honors.map((honor, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: i * 0.1, ease: "easeOut" }}
-                whileHover={{ y: -8, scale: 1.03 }}
-                className="card-glow p-6"
-              >
-                <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-4">
-                  <honor.icon className="w-6 h-6 text-accent" />
-                </div>
-                <div className="text-sm text-accent font-mono mb-2">{honor.year}</div>
-                <h4 className="text-base font-semibold text-foreground mb-2">{honor.title}</h4>
-                <p className="text-sm text-muted-foreground">{honor.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* 核心课程 */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          <div className="flex items-center gap-3 mb-8">
-            <BookOpen className="w-6 h-6 text-accent" />
-            <h3 className="text-xl font-semibold text-foreground">核心课程</h3>
-            <span className="text-sm text-muted-foreground font-mono bg-muted px-3 py-1 rounded-lg">avg: 93.6</span>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {education.courses.map((course, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: i * 0.05, ease: "easeOut" }}
-                whileHover={{ scale: 1.03, y: -6 }}
-                className="card p-5 hover-glow"
-              >
-                <div className="flex items-start justify-between mb-3">
-                  <h4 className="text-sm font-medium text-foreground">{course.name}</h4>
-                  <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded">{course.credit}分</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${course.score}%` }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1, delay: i * 0.05, ease: "easeOut" }}
-                      className="h-full bg-gradient-accent rounded-full"
-                      style={{ boxShadow: "0 0 10px rgba(37, 99, 235, 0.4)" }}
-                    />
+          {/* 核心课程列表 */}
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xs font-mono text-gray-400 flex items-center gap-2 uppercase tracking-widest">
+                <BookOpen className="w-4 h-4 text-blue-600" />
+                核心课程
+              </h3>
+              <span className="text-xs font-mono text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-100 font-semibold">
+                AVG: 93.6
+              </span>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {education.courses.map((course, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.05 }}
+                  className="card p-3.5 flex items-center justify-between"
+                >
+                  <div>
+                    <h4 className="text-xs font-medium text-gray-800">{course.name}</h4>
+                    <span className="text-[10px] text-gray-400 font-mono">{course.credit} 学分</span>
                   </div>
-                  <span className="text-lg font-semibold text-foreground stat-number">{course.score}</span>
-                </div>
-              </motion.div>
-            ))}
+                  <span className="text-sm font-bold font-mono text-blue-600">{course.score}</span>
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
