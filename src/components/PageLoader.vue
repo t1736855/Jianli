@@ -22,20 +22,20 @@
       <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2 overflow-hidden">
         <div
           class="h-full bg-gradient-to-r from-primary to-accent transition-all duration-300 ease-out"
-          :style="{ width: `${progress}%` }"
+          :style="{ width: `${displayProgress}%` }"
         ></div>
       </div>
 
       <!-- Progress Percentage -->
       <div class="mt-4 text-center text-sm font-medium text-gray-600 dark:text-gray-400">
-        {{ progress }}%
+        {{ displayProgress }}%
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { Cloud } from 'lucide-vue-next'
 
 const emit = defineEmits<{
@@ -44,6 +44,11 @@ const emit = defineEmits<{
 
 const progress = ref(0)
 const loadingText = ref('Loading')
+
+// 显示的进度（向下取整，确保不超过100）
+const displayProgress = computed(() => {
+  return Math.min(Math.floor(progress.value), 100)
+})
 
 const loadingTexts = [
   'Loading',
@@ -66,6 +71,7 @@ onMounted(() => {
   const interval = setInterval(() => {
     progress.value += increment
     
+    // 当进度达到或超过100时停止
     if (progress.value >= 100) {
       progress.value = 100
       clearInterval(interval)

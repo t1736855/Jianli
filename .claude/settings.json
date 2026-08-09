@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(netstat -ano)",
+      "Bash(tasklist)",
+      "Bash(wmic process *)",
+      "Bash(taskkill //F //PID 28084)",
+      "Bash(taskkill //F //PID 38640)",
+      "Bash(ls -la ~/.agents/skills/ 2>/dev/null || echo \"skills 目录不存在\")",
+      "Read(//c/Users/33/.agents/skills/**)",
+      "Bash(find ~/.agents/skills/ -name \"*.md\" 2>/dev/null | head -20)",
+      "Bash(npm install *)",
+      "Bash(curl -s http://localhost:3000)"
+    ]
+  }
+}

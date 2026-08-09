@@ -1,5 +1,45 @@
 # 张云阶 - 云计算工程师个人简历网站
 
+## ⚠️ 重要更新
+
+**本项目现已提供两个版本：**
+
+1. **React/Next.js 版本** (原版) - 使用 `app/` 和 `components/` 目录
+2. **Vue 3 + Vite 版本** (新版) ⭐ - 使用 `src/` 目录
+
+### 🚀 快速启动 Vue 版本
+
+**Windows 用户：**
+```bash
+.\start-vue.bat
+```
+
+**Mac/Linux 用户：**
+```bash
+bash start-vue.sh
+```
+
+脚本会自动：
+- ✅ 检测并删除旧的 React 依赖
+- ✅ 安装 Vue 3 依赖包
+- ✅ 启动 Vite 开发服务器
+
+**手动启动：**
+```bash
+# 1. 使用 Vue 配置
+cp package.vue.json package.json
+
+# 2. 安装依赖
+npm install
+
+# 3. 启动开发服务器
+npm run dev
+```
+
+📖 **详细文档**：请查看 [VUE_SETUP.md](./VUE_SETUP.md)
+
+---
+
 ## 🌟 项目简介
 
 这是一个专为云计算技术应用专业学生打造的高端个人简历网站，采用现代化的设计理念和前沿的 Web 技术栈。网站以极简主义和赛博专业感为设计核心，完美展现了云原生领域的技术深度。
@@ -34,31 +74,162 @@
 
 ## 📦 快速开始
 
-### 1. 安装依赖
+### 项目目录说明
+
+本项目是一个 **纯前端项目**，基于 Next.js 框架开发，不包含独立的后端服务。
+
+```
+个人简历网站/                    # 项目根目录
+├── app/                         # 【前端】Next.js App Router 目录
+│   ├── layout.tsx              # 根布局文件
+│   ├── page.tsx                # 主页面（首页）
+│   └── globals.css             # 全局 CSS 样式
+├── components/                  # 【前端】React 组件目录
+│   ├── ThemeProvider.tsx       # 主题切换功能
+│   ├── PageLoader.tsx          # 页面加载动画
+│   ├── Navbar.tsx              # 顶部导航栏
+│   ├── HeroSection.tsx         # 首屏展示区域
+│   ├── TransitionSection.tsx   # 滚动过渡动画区域
+│   ├── EducationSection.tsx    # 教育背景展示
+│   ├── SkillsSection.tsx       # 技能专长展示
+│   ├── ProjectsSection.tsx     # 项目经历展示
+│   └── ContactSection.tsx      # 联系方式展示
+├── public/                      # 【静态资源】图片、图标等
+├── node_modules/                # npm 依赖包（自动生成）
+├── .next/                       # Next.js 构建产物（自动生成）
+├── package.json                 # 项目配置和依赖清单
+├── tailwind.config.ts           # Tailwind CSS 配置
+├── tsconfig.json                # TypeScript 配置
+├── next.config.js               # Next.js 框架配置
+└── README.md                    # 项目说明文档（本文件）
+```
+
+**重要说明**：
+- ✅ **前端代码位置**：`app/` 和 `components/` 目录
+- ❌ **本项目无后端**：这是一个纯静态网站，所有数据都写在前端组件中
+- 📦 **依赖管理**：使用 npm，依赖包安装在 `node_modules/`
+- 🚀 **运行环境**：Node.js 开发环境，生产环境可部署到 Vercel/Netlify 等平台
+
+---
+
+### 第一步：环境准备
+
+在启动项目前，请确保已安装以下环境：
+
+- **Node.js**：版本 >= 18.17（推荐使用 LTS 版本）
+  - 下载地址：https://nodejs.org/
+  - 验证安装：`node --version`
+  
+- **npm**：随 Node.js 自动安装
+  - 验证安装：`npm --version`
+
+---
+
+### 第二步：安装项目依赖
+
+在项目根目录下打开终端（PowerShell/CMD/Git Bash），运行：
 
 ```bash
 npm install
 ```
 
-### 2. 本地开发
+**说明**：
+- 这个命令会读取 `package.json` 文件，自动下载所有需要的依赖包
+- 依赖包会安装到 `node_modules/` 目录（约 200-300 MB）
+- ⏱️ 首次安装预计需要 2-5 分钟（取决于网络速度）
+
+**常见问题**：
+- 如果安装失败，尝试清除缓存：`npm cache clean --force`
+- 如果网络慢，可以使用国内镜像：`npm config set registry https://registry.npmmirror.com`
+
+---
+
+### 第三步：启动开发服务器
+
+安装完成后，运行以下命令启动开发服务器：
 
 ```bash
 npm run dev
 ```
 
-然后在浏览器中打开 [http://localhost:3000](http://localhost:3000) 查看效果。
+**启动成功后会看到：**
 
-### 3. 构建生产版本
+```
+✓ Ready in 2.5s
+- Local:        http://localhost:3000
+- Network:      http://192.168.x.x:3000
+```
+
+**访问方式**：
+- 本地访问：打开浏览器，访问 `http://localhost:3000`
+- 局域网访问：使用 Network 地址，可在手机/平板上预览
+
+**开发模式特性**：
+- 🔥 **热重载**：修改代码后自动刷新页面
+- 🐛 **错误提示**：代码错误会在浏览器中显示
+- ⚡ **快速刷新**：支持组件级别的快速更新
+
+**停止服务器**：
+- Windows：按 `Ctrl + C`
+- Mac/Linux：按 `Ctrl + C`
+
+---
+
+### 第四步：构建生产版本（可选）
+
+开发完成后，可以构建优化后的生产版本：
 
 ```bash
 npm run build
 ```
 
-### 4. 启动生产服务器
+**构建过程**：
+- ✓ 编译 TypeScript 代码
+- ✓ 优化 React 组件
+- ✓ 压缩 CSS 和 JavaScript
+- ✓ 生成静态资源
+- ✓ 输出到 `.next/` 目录
+
+**启动生产服务器**：
 
 ```bash
 npm start
 ```
+
+生产模式会在 `http://localhost:3000` 启动，性能比开发模式更好。
+
+---
+
+### 完整的命令列表
+
+| 命令 | 说明 | 使用场景 |
+|------|------|----------|
+| `npm install` | 安装项目依赖 | 首次使用或更新依赖时 |
+| `npm run dev` | 启动开发服务器 | 日常开发调试 |
+| `npm run build` | 构建生产版本 | 准备部署前 |
+| `npm start` | 启动生产服务器 | 本地预览生产版本 |
+| `npm run lint` | 代码质量检查 | 提交代码前检查 |
+
+---
+
+### 快速测试流程
+
+如果您是第一次使用，建议按以下步骤快速测试：
+
+```bash
+# 1. 进入项目目录
+cd "E:\前端练习\练习\个人简历网站"
+
+# 2. 安装依赖（首次使用）
+npm install
+
+# 3. 启动开发服务器
+npm run dev
+
+# 4. 打开浏览器访问 http://localhost:3000
+```
+
+✅ 如果能看到网站首页，说明启动成功！
 
 ## 🚀 部署到 Vercel
 

@@ -13,17 +13,12 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>("light");
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
     const stored = localStorage.getItem("theme") as Theme;
     if (stored) {
       setTheme(stored);
       document.documentElement.classList.toggle("dark", stored === "dark");
-    } else {
-      // 默认使用浅色模式
-      document.documentElement.classList.remove("dark");
     }
   }, []);
 

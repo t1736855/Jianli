@@ -1,342 +1,332 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { ExternalLink, Github, Calendar, Users, TrendingUp, CheckCircle2 } from "lucide-react";
-import { useRef } from "react";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { ExternalLink, Github, Calendar, Users, TrendingUp, CheckCircle2, ArrowRight, Star, GitBranch } from "lucide-react";
+
+const projects = [
+  {
+    title: "Kubernetes 高可用微服务平台",
+    subtitle: "HA Microservices on K8s",
+    period: "2024.03 - 2024.08",
+    team: "4人团队",
+    role: "架构设计",
+    status: "已上线",
+    stars: 12,
+    description: "校园私有云环境下，设计并实现基于 Kubernetes 的生产级微服务部署平台。集成 Prometheus 监控、Grafana 可视化、ELK 日志系统。",
+    background: "校内项目部署效率低，缺乏统一容器化平台，每次部署需要手动操作，耗时且易出错。",
+    solution: ["Kubernetes + Helm 统一容器编排", "Prometheus + Grafana 全方位监控", "HPA 自动扩缩容策略", "Istio 服务网格治理"],
+    achievements: ["部署效率提升 80%", "服务可用性 99.9%", "资源利用率提升 40%", "支撑 15+ 微服务"],
+    tech: ["Kubernetes", "Docker", "Helm", "Prometheus", "Grafana", "Go", "Istio"],
+    metrics: [{ label: "服务", value: "15+" }, { label: "日请求", value: "10K+" }, { label: "可用性", value: "99.9%" }],
+    gradient: "from-blue-500 to-indigo-600",
+  },
+  {
+    title: "Serverless 自动化工作流",
+    subtitle: "Serverless Automation",
+    period: "2023.11 - 2024.02",
+    team: "独立项目",
+    role: "全栈开发",
+    status: "已上线",
+    stars: 8,
+    description: "基于阿里云函数计算开发的自动化数据处理系统。事件驱动架构，自动处理图片压缩、视频转码、数据同步。",
+    background: "传统服务器模式下媒体处理资源消耗大、成本高，空闲时资源浪费严重。",
+    solution: ["Serverless 架构，按需付费", "事件驱动，OSS 触发器自动启动", "函数编排支持条件分支", "错误重试与死信队列"],
+    achievements: ["计算成本降低 60%", "处理速度提升 3 倍", "零运维成本", "日处理 1000+ 文件"],
+    tech: ["Node.js", "Aliyun FC", "OSS", "API Gateway", "TypeScript", "Redis"],
+    metrics: [{ label: "成本节省", value: "60%" }, { label: "日处理", value: "1000+" }, { label: "响应", value: "<500ms" }],
+    gradient: "from-amber-500 to-orange-600",
+  },
+  {
+    title: "Terraform 多云资源管理",
+    subtitle: "Multi-Cloud IaC Platform",
+    period: "2023.09 - 2023.12",
+    team: "3人团队",
+    role: "IaC 设计",
+    status: "已完成",
+    stars: 15,
+    description: "使用 Terraform 构建的跨云平台资源管理系统，支持 AWS、阿里云、华为云统一管理。模块化设计，可复用基础设施代码。",
+    background: "多云环境资源管理混乱，手动配置易出错，环境不一致导致频繁故障。",
+    solution: ["Terraform 可复用基础设施代码", "统一模块化架构，多云部署", "GitLab CI 自动化审批流程", "Ansible 配置管理联动"],
+    achievements: ["部署时间天级降至小时级", "环境一致性 100%", "快速创建多环境", "管理 50+ 云资源"],
+    tech: ["Terraform", "Ansible", "GitLab CI", "AWS", "Aliyun", "Python", "HCL"],
+    metrics: [{ label: "资源", value: "50+" }, { label: "云平台", value: "3" }, { label: "部署速度", value: "10x" }],
+    gradient: "from-emerald-500 to-teal-600",
+  },
+  {
+    title: "智能运维监控系统",
+    subtitle: "Intelligent DevOps Monitoring",
+    period: "2024.05 - 至今",
+    team: "2人团队",
+    role: "后端开发",
+    status: "开发中",
+    stars: 6,
+    description: "基于 Prometheus + Grafana + Alertmanager 构建的智能运维监控系统。实时监控、智能告警、故障自愈。支持自定义 Dashboard。",
+    background: "缺乏统一监控体系，故障发现不及时，告警泛滥导致告警疲劳。",
+    solution: ["Prometheus 采集多维指标", "Grafana 多维度监控大屏", "Alertmanager 分级告警路由", "Webhook 集成企业微信/钉钉"],
+    achievements: ["监控覆盖率 100%", "故障发现缩短 90%", "误告率降低 70%", "历史数据保留 30 天"],
+    tech: ["Prometheus", "Grafana", "Alertmanager", "Go", "Webhook", "Docker"],
+    metrics: [{ label: "指标", value: "30+" }, { label: "响应", value: "<2min" }, { label: "误告降低", value: "70%" }],
+    gradient: "from-purple-500 to-pink-600",
+  },
+  {
+    title: "容器镜像优化工具",
+    subtitle: "Container Image Optimizer",
+    period: "2024.08 - 2024.10",
+    team: "独立项目",
+    role: "工具开发",
+    status: "开源",
+    stars: 23,
+    description: "自动化分析和优化 Docker 镜像大小的 CLI 工具。支持多阶段构建建议、无用层检测、基础镜像推荐。",
+    background: "团队 Docker 镜像普遍偏大，影响部署速度和存储成本。",
+    solution: ["镜像层分析与可视化", "多阶段构建自动优化", "无用依赖检测", "最佳基础镜像推荐"],
+    achievements: ["平均镜像缩小 65%", "部署速度提升 3 倍", "节省存储 40%", "GitHub 23 Stars"],
+    tech: ["Go", "Docker", "OCI", "CLI", "GitHub Actions"],
+    metrics: [{ label: "镜像缩小", value: "65%" }, { label: "GitHub Stars", value: "23" }, { label: "用户", value: "200+" }],
+    gradient: "from-cyan-500 to-blue-600",
+  },
+  {
+    title: "校园云盘系统",
+    subtitle: "Campus Cloud Storage",
+    period: "2023.06 - 2023.09",
+    team: "5人团队",
+    role: "后端开发",
+    status: "已上线",
+    stars: 10,
+    description: "面向校园的文件存储与分享系统。支持大文件分片上传、在线预览、权限管理、分享链接。基于 MinIO 对象存储。",
+    background: "校内文件分享依赖U盘和微信，不便管理且安全性差。",
+    solution: ["MinIO 对象存储后端", "分片上传与断点续传", "RBAC 权限管理体系", "文件在线预览服务"],
+    achievements: ["注册用户 500+", "日活跃用户 100+", "存储文件 10K+", "平均上传速度 50MB/s"],
+    tech: ["Python", "FastAPI", "MinIO", "PostgreSQL", "Redis", "Vue.js"],
+    metrics: [{ label: "用户", value: "500+" }, { label: "文件", value: "10K+" }, { label: "在线率", value: "99.5%" }],
+    gradient: "from-rose-500 to-red-600",
+  },
+];
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  },
+};
 
 export default function ProjectsSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
-
-  const projects = [
-    {
-      title: "基于 Kubernetes 的高可用微服务部署平台",
-      subtitle: "High-Availability Microservices Platform on K8s",
-      period: "2024.03 - 2024.08",
-      team: "4人团队",
-      role: "架构设计 & 核心开发",
-      description: "在校园私有云环境下，设计并实现了一套基于 Kubernetes 的生产级微服务部署平台。该平台集成了 Prometheus 监控、Grafana 可视化、ELK 日志系统，支持自动扩缩容、滚动更新、健康检查等企业级功能，为校内多个项目提供稳定的容器化运行环境。",
-      background: "校内项目部署效率低下，缺乏统一的容器化平台，运维成本高。",
-      solution: [
-        "采用 Kubernetes + Helm 构建统一的容器编排平台",
-        "集成 Prometheus + Grafana 实现全方位监控告警",
-        "基于 HPA 实现自动扩缩容，提升资源利用率",
-        "通过 Ingress-Nginx 实现统一的流量入口管理",
-        "建立完善的 CI/CD 流水线，实现自动化部署",
-      ],
-      achievements: [
-        "部署效率提升 80%，从小时级降至分钟级",
-        "服务可用性达到 99.9%，故障恢复时间 < 30s",
-        "资源利用率提升 40%，降低了基础设施成本",
-        "支撑 15+ 个微服务应用稳定运行",
-      ],
-      tech: ["Kubernetes", "Docker", "Helm", "Prometheus", "Grafana", "ELK", "Go", "Python"],
-      github: "https://github.com",
-      demo: "#",
-      gradient: "from-blue-500 via-purple-500 to-pink-500",
-      metrics: [
-        { label: "服务数量", value: "15+" },
-        { label: "日均请求", value: "10K+" },
-        { label: "可用性", value: "99.9%" },
-      ],
-    },
-    {
-      title: "Serverless 自动化工作流系统",
-      subtitle: "Serverless Automation Workflow System",
-      period: "2023.11 - 2024.02",
-      team: "独立项目",
-      role: "全栈开发",
-      description: "基于阿里云函数计算 (Function Compute) 开发的自动化数据处理系统。该系统采用事件驱动架构，能够自动化处理图片压缩、视频转码、数据同步等任务，支持复杂的工作流编排，大幅降低了计算成本和运维复杂度。",
-      background: "传统服务器模式下，媒体文件处理任务资源消耗大，成本高，扩展性差。",
-      solution: [
-        "采用 Serverless 架构，按需付费，降低成本",
-        "基于事件驱动设计，OSS 触发器自动启动任务",
-        "函数编排实现复杂工作流，支持条件分支和并行处理",
-        "集成阿里云 MNS 消息队列，保证任务可靠性",
-        "使用 API Gateway 提供 RESTful 接口",
-      ],
-      achievements: [
-        "计算成本降低 60%，仅为传统方案的 40%",
-        "处理速度提升 3 倍，支持高并发场景",
-        "零运维成本，自动伸缩，按需计费",
-        "日处理文件数量 1000+，峰值 5000+",
-      ],
-      tech: ["Node.js", "Aliyun FC", "OSS", "API Gateway", "EventBridge", "MNS", "TypeScript"],
-      github: "https://github.com",
-      demo: "#",
-      gradient: "from-green-500 via-teal-500 to-blue-500",
-      metrics: [
-        { label: "成本节省", value: "60%" },
-        { label: "日处理量", value: "1000+" },
-        { label: "响应时间", value: "<500ms" },
-      ],
-    },
-    {
-      title: "基于 Terraform 的多云资源管理平台",
-      subtitle: "Multi-Cloud Resource Management Platform",
-      period: "2023.09 - 2023.12",
-      team: "3人团队",
-      role: "IaC 设计 & 实施",
-      description: "使用 Terraform 构建的跨云平台资源管理系统，支持 AWS、阿里云、华为云的统一管理。通过基础设施即代码 (IaC) 的方式，实现了云资源的版本控制、一键部署、环境复制等功能，大幅提升了基础设施管理效率。",
-      background: "多云环境下资源管理混乱，手动配置易出错，环境不一致。",
-      solution: [
-        "使用 Terraform 编写可复用的基础设施代码",
-        "建立统一的模块化架构，支持多云部署",
-        "集成 GitLab CI 实现自动化审批和部署",
-        "使用 Terraform State 远程存储，确保状态一致性",
-        "编写 Ansible Playbook 完成后续配置管理",
-      ],
-      achievements: [
-        "基础设施部署时间从天级降至小时级",
-        "环境一致性达到 100%，消除配置漂移",
-        "支持快速创建开发/测试/生产环境",
-        "管理 50+ 云资源实例，覆盖 3 个云平台",
-      ],
-      tech: ["Terraform", "Ansible", "GitLab CI", "AWS", "Aliyun", "HuaweiCloud", "Python"],
-      github: "https://github.com",
-      demo: "#",
-      gradient: "from-orange-500 via-red-500 to-pink-500",
-      metrics: [
-        { label: "资源数量", value: "50+" },
-        { label: "云平台", value: "3" },
-        { label: "部署速度", value: "10x" },
-      ],
-    },
-    {
-      title: "智能运维监控告警系统",
-      subtitle: "Intelligent DevOps Monitoring & Alerting System",
-      period: "2024.05 - 至今",
-      team: "2人团队",
-      role: "后端开发 & 监控架构",
-      description: "基于 Prometheus + Grafana + Alertmanager 构建的智能运维监控系统。该系统不仅提供实时监控和可视化，还集成了智能告警策略、故障自愈机制、历史数据分析等功能，帮助运维团队快速发现和解决问题。",
-      background: "缺乏统一的监控体系，故障发现不及时，告警噪音大。",
-      solution: [
-        "部署 Prometheus 采集系统、应用、业务指标",
-        "使用 Grafana 构建多维度监控大屏",
-        "配置 Alertmanager 实现分级告警和路由",
-        "开发自定义 Exporter 监控业务指标",
-        "集成钉钉/企业微信机器人，实时推送告警",
-      ],
-      achievements: [
-        "监控覆盖率 100%，包含 30+ 监控指标",
-        "故障发现时间缩短 90%，平均响应 < 2分钟",
-        "误告率降低 70%，通过智能聚合和抑制",
-        "历史数据保留 30 天，支持趋势分析",
-      ],
-      tech: ["Prometheus", "Grafana", "Alertmanager", "Node Exporter", "Blackbox", "Go", "Webhook"],
-      github: "https://github.com",
-      demo: "#",
-      gradient: "from-yellow-500 via-orange-500 to-red-500",
-      metrics: [
-        { label: "监控指标", value: "30+" },
-        { label: "告警响应", value: "<2min" },
-        { label: "误告降低", value: "70%" },
-      ],
-    },
-  ];
+  const [expanded, setExpanded] = useState<number | null>(null);
 
   return (
-    <section ref={sectionRef} id="projects" className="py-32 relative overflow-hidden">
-      {/* 背景装饰 */}
-      <motion.div style={{ y }} className="absolute inset-0 -z-10">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
-      </motion.div>
+    <section id="projects" className="section relative overflow-hidden">
+      <div className="blob-2" style={{ top: "20%", right: "-10%" }} />
+      <div className="blob-3" style={{ bottom: "10%", left: "-5%" }} />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 网格背景 */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.03]"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(37, 99, 235, 0.15) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(37, 99, 235, 0.15) 1px, transparent 1px)
+          `,
+          backgroundSize: "60px 60px",
+        }}
+      />
+
+      <div className="container-main relative z-10">
         {/* 标题 */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-20"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-center mb-16"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4"
-          >
-            <TrendingUp className="w-5 h-5 text-primary" />
-            <span className="text-sm font-medium text-primary">Featured Projects</span>
-          </motion.div>
-          <h2 className="text-5xl md:text-6xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              项目经历
-            </span>
+          <div className="badge mb-4">
+            <TrendingUp className="w-3.5 h-3.5" />
+            Projects
+          </div>
+          <h2 className="heading-display text-4xl md:text-5xl text-foreground mb-4">
+            <span className="gradient-text-accent">项目经历</span>
           </h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            从需求分析到生产部署的完整项目经验，注重技术深度与业务价值
-          </p>
+          <p className="text-muted-foreground max-w-lg mx-auto text-lg">从需求分析到生产部署的完整项目经验</p>
         </motion.div>
 
-        {/* 项目列表 */}
-        <div className="space-y-12">
-          {projects.map((project, index) => (
+        {/* 项目统计 */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-16"
+        >
+          {[
+            { label: "项目总数", value: "8+", icon: "📦" },
+            { label: "GitHub Stars", value: "74+", icon: "⭐" },
+            { label: "团队协作", value: "4 个项目", icon: "👥" },
+            { label: "技术栈", value: "15+", icon: "🔧" },
+          ].map((stat) => (
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: index * 0.2, duration: 0.8 }}
-              className="group"
+              key={stat.label}
+              variants={itemVariants}
+              whileHover={{ y: -8, scale: 1.05 }}
+              className="card p-5 text-center hover-glow"
             >
-              <div className="bg-white rounded-3xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-2xl transition-all duration-500">
-                {/* 顶部装饰条 */}
-                <div className={`h-2 bg-gradient-to-r ${project.gradient}`} />
-                
-                <div className="p-8 md:p-10">
-                  {/* 项目头部 */}
-                  <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mb-8">
-                    <div className="flex-1">
-                      <div className="flex items-start gap-4 mb-4">
-                        <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${project.gradient} flex items-center justify-center text-white text-2xl font-bold flex-shrink-0`}>
-                          {index + 1}
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="text-3xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
-                            {project.title}
-                          </h3>
-                          <p className="text-gray-600 text-lg mb-3">{project.subtitle}</p>
-                          <div className="flex flex-wrap gap-3">
-                            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-sm">
-                              <Calendar className="w-4 h-4" />
-                              {project.period}
-                            </span>
-                            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-sm">
-                              <Users className="w-4 h-4" />
-                              {project.team}
-                            </span>
-                            <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium">
-                              {project.role}
-                            </span>
+              <div className="text-3xl mb-2">{stat.icon}</div>
+              <div className="text-xl font-semibold text-foreground stat-number">{stat.value}</div>
+              <div className="text-sm text-muted-foreground">{stat.label}</div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* 项目卡片 */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="space-y-6"
+        >
+          {projects.map((project, index) => {
+            const isExpanded = expanded === index;
+            return (
+              <motion.div key={index} variants={itemVariants}>
+                <div className="card-flat overflow-hidden hover-glow">
+                  {/* 渐变顶部条 */}
+                  <div className={`h-2 bg-gradient-to-r ${project.gradient}`} />
+
+                  <div className="p-8">
+                    {/* 头部 */}
+                    <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-5 mb-5">
+                      <div className="flex-1">
+                        <div className="flex items-start gap-4 mb-3">
+                          <motion.div
+                            whileHover={{ scale: 1.15, rotate: 10 }}
+                            className={`w-12 h-12 rounded-xl bg-gradient-to-br ${project.gradient} text-white flex items-center justify-center text-base font-semibold flex-shrink-0 shadow-lg`}
+                          >
+                            {index + 1}
+                          </motion.div>
+                          <div>
+                            <div className="flex items-center gap-3 flex-wrap">
+                              <h3 className="text-xl md:text-2xl font-semibold text-foreground">{project.title}</h3>
+                              <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                                project.status === "已上线" ? "bg-emerald-50 text-emerald-600" :
+                                project.status === "开发中" ? "bg-amber-50 text-amber-600" :
+                                project.status === "开源" ? "bg-blue-50 text-blue-600" :
+                                "bg-muted text-muted-foreground"
+                              }`}>
+                                {project.status}
+                              </span>
+                            </div>
+                            <p className="text-muted-foreground text-base">{project.subtitle}</p>
                           </div>
                         </div>
+                        <div className="flex flex-wrap gap-3 ml-16">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted text-muted-foreground text-sm">
+                            <Calendar className="w-3.5 h-3.5" /> {project.period}
+                          </span>
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted text-muted-foreground text-sm">
+                            <Users className="w-3.5 h-3.5" /> {project.team}
+                          </span>
+                          <span className="px-3 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-medium">{project.role}</span>
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted text-muted-foreground text-sm">
+                            <Star className="w-3.5 h-3.5" /> {project.stars} stars
+                          </span>
+                        </div>
+                      </div>
+                      <div className="flex lg:flex-col gap-4">
+                        {project.metrics.map((m, i) => (
+                          <div key={i} className="text-center lg:text-right">
+                            <div className="text-lg font-semibold gradient-text-accent stat-number">{m.value}</div>
+                            <div className="text-xs text-muted-foreground">{m.label}</div>
+                          </div>
+                        ))}
                       </div>
                     </div>
 
-                    {/* 关键指标 */}
-                    <div className="flex lg:flex-col gap-4">
-                      {project.metrics.map((metric, i) => (
-                        <div key={i} className="text-center lg:text-right">
-                          <div className="text-2xl font-bold text-primary">{metric.value}</div>
-                          <div className="text-sm text-gray-600">{metric.label}</div>
+                    <p className="text-muted-foreground text-base leading-relaxed mb-5 ml-16">{project.description}</p>
+
+                    {/* 可展开详情 */}
+                    <motion.div
+                      initial={false}
+                      animate={{ height: isExpanded ? "auto" : 0, opacity: isExpanded ? 1 : 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="grid md:grid-cols-2 gap-5 mb-5 pt-5 border-t border-border ml-16">
+                        <div>
+                          <h4 className="text-base font-semibold text-foreground mb-3">项目背景</h4>
+                          <p className="text-sm text-muted-foreground leading-relaxed">{project.background}</p>
                         </div>
+                        <div>
+                          <h4 className="text-base font-semibold text-foreground mb-3">解决方案</h4>
+                          <ul className="space-y-2">
+                            {project.solution.map((s, i) => (
+                              <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+                                <CheckCircle2 className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
+                                {s}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                      <div className="ml-16 mb-5">
+                        <h4 className="text-base font-semibold text-foreground mb-3 flex items-center gap-2">
+                          <TrendingUp className="w-5 h-5 text-accent" /> 项目成果
+                        </h4>
+                        <div className="grid md:grid-cols-2 gap-3">
+                          {project.achievements.map((a, i) => (
+                            <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-muted/50 text-sm text-muted-foreground">
+                              <div className="w-6 h-6 rounded-full bg-gradient-accent flex items-center justify-center flex-shrink-0">
+                                <span className="text-white text-xs">✓</span>
+                              </div>
+                              {a}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </motion.div>
+
+                    {/* 技术标签 + 操作 */}
+                    <div className="flex flex-wrap items-center gap-3 pt-5 border-t border-border ml-16">
+                      {project.tech.map((t, i) => (
+                        <span key={i} className="tag">
+                          {t}
+                        </span>
                       ))}
+                      <div className="flex-1" />
+                      <button
+                        onClick={() => setExpanded(isExpanded ? null : index)}
+                        className="px-4 py-2 rounded-lg text-sm font-mono text-accent hover:bg-accent/5 transition-colors inline-flex items-center gap-1.5"
+                      >
+                        {isExpanded ? "收起" : "详情"}
+                        <ArrowRight className={`w-4 h-4 transition-transform ${isExpanded ? "rotate-90" : ""}`} />
+                      </button>
+                      <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
+                        <Github className="w-5 h-5" />
+                      </a>
+                      <a href="#" className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
+                        <ExternalLink className="w-5 h-5" />
+                      </a>
                     </div>
-                  </div>
-
-                  {/* 项目描述 */}
-                  <p className="text-gray-700 leading-relaxed mb-6 text-lg">
-                    {project.description}
-                  </p>
-
-                  {/* 背景与解决方案 */}
-                  <div className="grid md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                        <span className="w-1 h-5 bg-primary rounded" />
-                        项目背景
-                      </h4>
-                      <p className="text-gray-600 text-sm leading-relaxed">{project.background}</p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                        <span className="w-1 h-5 bg-accent rounded" />
-                        解决方案
-                      </h4>
-                      <ul className="space-y-2">
-                        {project.solution.slice(0, 3).map((item, i) => (
-                          <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
-                            <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-
-                  {/* 项目成果 */}
-                  <div className="mb-6">
-                    <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                      <TrendingUp className="w-5 h-5 text-primary" />
-                      项目成果
-                    </h4>
-                    <div className="grid md:grid-cols-2 gap-3">
-                      {project.achievements.map((achievement, i) => (
-                        <motion.div
-                          key={i}
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: i * 0.1 }}
-                          className="flex items-start gap-3 p-3 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors"
-                        >
-                          <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <span className="text-primary text-sm font-bold">✓</span>
-                          </div>
-                          <span className="text-sm text-gray-700">{achievement}</span>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* 技术栈 */}
-                  <div className="mb-6">
-                    <h4 className="font-semibold text-gray-900 mb-3">技术栈</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tech.map((tech, i) => (
-                        <motion.span
-                          key={i}
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          whileInView={{ opacity: 1, scale: 1 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: i * 0.05 }}
-                          whileHover={{ scale: 1.1, y: -2 }}
-                          className="px-4 py-2 rounded-xl text-sm font-medium bg-gray-100 text-gray-700 hover:bg-primary hover:text-white transition-all cursor-pointer"
-                        >
-                          {tech}
-                        </motion.span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* 链接 */}
-                  <div className="flex gap-3 pt-4 border-t border-gray-200">
-                    <motion.a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gray-900 text-white font-medium hover:bg-gray-800 transition-colors"
-                    >
-                      <Github className="w-5 h-5" />
-                      查看源码
-                    </motion.a>
-                    <motion.a
-                      href={project.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className={`flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r ${project.gradient} text-white font-medium shadow-lg hover:shadow-xl transition-all`}
-                    >
-                      <ExternalLink className="w-5 h-5" />
-                      在线演示
-                    </motion.a>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
       </div>
     </section>
   );

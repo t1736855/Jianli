@@ -1,71 +1,53 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Mail, Github, Linkedin, MessageSquare, Copy, Check, Phone, MapPin, Send } from "lucide-react";
 import { useState } from "react";
+import { motion } from "framer-motion";
+import { Mail, Github, MessageSquare, Copy, Check, Phone, MapPin, Send, ExternalLink, ArrowUp, Clock, Coffee, Heart } from "lucide-react";
+
+const socialLinks = [
+  { icon: MessageSquare, label: "微信", value: "YunJie_Cloud", copyable: true, desc: "扫码或搜索添加", gradient: "from-green-500 to-emerald-500" },
+  { icon: Mail, label: "邮箱", value: "yunjie.cloud@example.com", href: "mailto:yunjie.cloud@example.com", copyable: true, desc: "24h 内回复", gradient: "from-blue-500 to-indigo-500" },
+  { icon: Github, label: "GitHub", value: "github.com/zhangyunjie", href: "https://github.com", copyable: false, desc: "开源项目与贡献", gradient: "from-gray-700 to-gray-900" },
+  { icon: ExternalLink, label: "掘金", value: "juejin.cn/@zhangyunjie", href: "https://juejin.cn", copyable: false, desc: "技术博客文章", gradient: "from-blue-400 to-blue-600" },
+];
+
+const contactInfo = [
+  { icon: Phone, label: "电话", value: "+86 138-xxxx-xxxx" },
+  { icon: MapPin, label: "位置", value: "重庆市 · 中国" },
+  { icon: Send, label: "响应", value: "24h 内回复" },
+  { icon: Clock, label: "时区", value: "UTC+8 (CST)" },
+];
+
+const faq = [
+  { q: "可以远程工作吗？", a: "可以，支持远程协作，熟练使用 Slack、飞书、Zoom 等工具。" },
+  { q: "接受实习机会吗？", a: "是的，正在寻找云计算/DevOps 相关的实习或全职机会。" },
+  { q: "可以技术交流吗？", a: "非常欢迎！我热爱技术交流，可以通过微信或邮件联系我。" },
+];
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  },
+};
 
 export default function ContactSection() {
   const [copiedItem, setCopiedItem] = useState<string | null>(null);
-
-  const socialLinks = [
-    {
-      icon: MessageSquare,
-      label: "微信",
-      value: "YunJie_Cloud",
-      copyable: true,
-      color: "from-green-400 to-green-600",
-      bgColor: "bg-green-50",
-      textColor: "text-green-600",
-    },
-    {
-      icon: Mail,
-      label: "邮箱",
-      value: "yunjie.cloud@example.com",
-      href: "mailto:yunjie.cloud@example.com",
-      copyable: true,
-      color: "from-blue-400 to-blue-600",
-      bgColor: "bg-blue-50",
-      textColor: "text-blue-600",
-    },
-    {
-      icon: Github,
-      label: "GitHub",
-      value: "github.com/zhangyunjie",
-      href: "https://github.com",
-      copyable: false,
-      color: "from-gray-600 to-gray-800",
-      bgColor: "bg-gray-50",
-      textColor: "text-gray-700",
-    },
-    {
-      icon: Linkedin,
-      label: "掘金",
-      value: "juejin.cn/@zhangyunjie",
-      href: "https://juejin.cn",
-      copyable: false,
-      color: "from-blue-500 to-cyan-500",
-      bgColor: "bg-cyan-50",
-      textColor: "text-cyan-600",
-    },
-  ];
-
-  const contactInfo = [
-    {
-      icon: Phone,
-      label: "联系电话",
-      value: "+86 138-xxxx-xxxx",
-    },
-    {
-      icon: MapPin,
-      label: "当前位置",
-      value: "重庆市 · 中国",
-    },
-    {
-      icon: Send,
-      label: "响应时间",
-      value: "24小时内回复",
-    },
-  ];
 
   const handleCopy = (text: string, label: string) => {
     navigator.clipboard.writeText(text);
@@ -73,226 +55,262 @@ export default function ContactSection() {
     setTimeout(() => setCopiedItem(null), 2000);
   };
 
-  return (
-    <section id="contact" className="py-32 relative overflow-hidden bg-gray-50">
-      {/* 背景装饰 */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-20 right-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 left-20 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
-      </div>
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  return (
+    <section id="contact" className="section bg-muted/30 relative overflow-hidden">
+      <div className="blob-1" style={{ bottom: "-15%", right: "-10%" }} />
+      <div className="blob-3" style={{ top: "10%", left: "-5%" }} />
+
+      {/* 网格背景 */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.03]"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(37, 99, 235, 0.15) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(37, 99, 235, 0.15) 1px, transparent 1px)
+          `,
+          backgroundSize: "60px 60px",
+        }}
+      />
+
+      <div className="container-main relative z-10">
         {/* 标题 */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-20"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-center mb-16"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4"
-          >
-            <Mail className="w-5 h-5 text-primary" />
-            <span className="text-sm font-medium text-primary">Get In Touch</span>
-          </motion.div>
-          <h2 className="text-5xl md:text-6xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              联系我
-            </span>
+          <div className="badge mb-4">
+            <Mail className="w-3.5 h-3.5" />
+            Contact
+          </div>
+          <h2 className="heading-display text-4xl md:text-5xl text-foreground mb-4">
+            <span className="gradient-text-accent">联系我</span>
           </h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            期待与您交流云计算技术，探讨职业发展机会
-          </p>
+          <p className="text-muted-foreground max-w-lg mx-auto text-lg">期待与您交流云计算技术，探讨职业发展机会</p>
         </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-8 mb-16">
-          {/* 左侧：个人介绍 */}
+          {/* 个人卡片 */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="lg:col-span-1 space-y-6"
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="lg:col-span-1 space-y-5"
           >
-            <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white text-3xl font-bold mb-6">
+            <div className="card-flat p-8 hover-glow">
+              <motion.div
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                className="w-20 h-20 rounded-2xl bg-gradient-accent text-white flex items-center justify-center text-3xl font-display font-semibold mb-5 shadow-xl"
+              >
                 张
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">张云阶</h3>
-              <p className="text-gray-600 mb-6">
-                云计算技术应用专业学生<br />
-                重庆商务职业学院
-              </p>
-              
+              </motion.div>
+              <h3 className="text-2xl font-semibold text-foreground mb-2">张云阶</h3>
+              <p className="text-muted-foreground text-base mb-2">云计算技术应用</p>
+              <p className="text-muted-foreground text-base mb-6">重庆商务职业学院</p>
               <div className="space-y-4">
-                {contactInfo.map((item, index) => {
-                  const Icon = item.icon;
-                  return (
-                    <div key={index} className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
-                        <Icon className="w-5 h-5 text-gray-600" />
-                      </div>
-                      <div>
-                        <div className="text-sm text-gray-500">{item.label}</div>
-                        <div className="font-medium text-gray-900">{item.value}</div>
-                      </div>
+                {contactInfo.map((item) => (
+                  <motion.div
+                    key={item.label}
+                    whileHover={{ x: 10 }}
+                    className="flex items-center gap-4"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-gradient-accent flex items-center justify-center flex-shrink-0 shadow-lg">
+                      <item.icon className="w-5 h-5 text-white" />
                     </div>
-                  );
-                })}
+                    <div>
+                      <div className="text-xs text-muted-foreground font-mono">{item.label}</div>
+                      <div className="text-base text-foreground font-medium">{item.value}</div>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-primary to-accent rounded-2xl p-6 text-white">
-              <h4 className="font-bold mb-2">开放合作</h4>
-              <p className="text-sm text-white/90">
-                欢迎实习/全职机会、技术交流、项目合作
+            <div className="card-flat p-6 bg-foreground text-white noise hover-glow">
+              <div className="flex items-center gap-3 mb-3">
+                <Coffee className="w-5 h-5" />
+                <h4 className="font-semibold text-base">开放合作</h4>
+              </div>
+              <p className="text-sm text-white/60 leading-relaxed">
+                欢迎实习/全职、技术交流、项目合作、开源协作
               </p>
+            </div>
+
+            <div className="card-flat p-6 hover-glow">
+              <div className="flex items-center gap-3 mb-4">
+                <Heart className="w-5 h-5 text-red-500" />
+                <h4 className="font-semibold text-base text-foreground">兴趣爱好</h4>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                {["开源社区", "技术写作", "云计算", "容器化", "自动化", "Linux"].map((hobby) => (
+                  <span key={hobby} className="px-3 py-1.5 rounded-full bg-muted text-sm text-muted-foreground hover:bg-accent hover:text-white transition-colors cursor-default">
+                    {hobby}
+                  </span>
+                ))}
+              </div>
             </div>
           </motion.div>
 
-          {/* 右侧：联系方式卡片 */}
-          <div className="lg:col-span-2 grid md:grid-cols-2 gap-6">
-            {socialLinks.map((link, index) => {
-              const Icon = link.icon;
+          {/* 社交链接 */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="lg:col-span-2 grid md:grid-cols-2 gap-5"
+          >
+            {socialLinks.map((link, i) => {
               const isCopied = copiedItem === link.label;
-
               return (
                 <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                  whileHover={{ y: -10, boxShadow: "0 20px 40px rgba(0,0,0,0.1)" }}
-                  className="group bg-white rounded-2xl p-6 border-2 border-gray-200 hover:border-primary transition-all cursor-pointer"
+                  key={i}
+                  variants={itemVariants}
+                  whileHover={{ y: -10, scale: 1.03 }}
+                  className="card-glow p-6 cursor-pointer"
                   onClick={() => {
-                    if (link.copyable) {
-                      handleCopy(link.value, link.label);
-                    } else if (link.href) {
-                      window.open(link.href, "_blank");
-                    }
+                    if (link.copyable) handleCopy(link.value, link.label);
+                    else if (link.href) window.open(link.href, "_blank");
                   }}
                 >
                   <div className="flex items-start justify-between mb-4">
-                    <div className={`w-14 h-14 rounded-xl ${link.bgColor} flex items-center justify-center group-hover:scale-110 transition-transform`}>
-                      <Icon className={`w-7 h-7 ${link.textColor}`} />
+                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${link.gradient} flex items-center justify-center shadow-lg`}>
+                      <link.icon className="w-6 h-6 text-white" />
                     </div>
                     {link.copyable && (
-                      <div className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
-                        isCopied 
-                          ? "bg-green-100 text-green-600" 
-                          : "bg-gray-100 text-gray-600"
+                      <span className={`px-3 py-1 rounded-full text-xs font-mono transition-colors ${
+                        isCopied ? "bg-emerald-50 text-emerald-600" : "bg-muted text-muted-foreground"
                       }`}>
                         {isCopied ? "已复制" : "点击复制"}
-                      </div>
+                      </span>
                     )}
                   </div>
-
-                  <h3 className={`text-xl font-bold mb-2 ${link.textColor} group-hover:text-primary transition-colors`}>
-                    {link.label}
-                  </h3>
-
-                  <p className="text-gray-600 text-sm break-all mb-4">
-                    {link.value}
-                  </p>
-
+                  <h3 className="text-lg font-semibold text-foreground mb-1">{link.label}</h3>
+                  <p className="text-sm text-muted-foreground mb-2">{link.desc}</p>
+                  <p className="text-sm text-muted-foreground font-mono break-all mb-4">{link.value}</p>
                   {link.copyable ? (
-                    <button className={`w-full py-2.5 rounded-lg flex items-center justify-center gap-2 text-sm font-medium transition-all ${
-                      isCopied
-                        ? "bg-green-500 text-white"
-                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    <button className={`w-full py-3 rounded-xl flex items-center justify-center gap-2 text-sm font-medium transition-all ${
+                      isCopied ? "bg-emerald-50 text-emerald-600" : "bg-muted text-muted-foreground hover:bg-muted/80"
                     }`}>
-                      {isCopied ? (
-                        <>
-                          <Check className="w-4 h-4" />
-                          已复制到剪贴板
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="w-4 h-4" />
-                          复制{link.label}
-                        </>
-                      )}
+                      {isCopied ? <><Check className="w-4 h-4" /> 已复制</> : <><Copy className="w-4 h-4" /> 复制</>}
                     </button>
                   ) : (
-                    <button className="w-full py-2.5 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 flex items-center justify-center gap-2 text-sm font-medium transition-all">
-                      <Send className="w-4 h-4" />
-                      访问主页
+                    <button className="w-full py-3 rounded-xl bg-muted text-muted-foreground hover:bg-muted/80 flex items-center justify-center gap-2 text-sm font-medium transition-all">
+                      <ExternalLink className="w-4 h-4" /> 访问
                     </button>
                   )}
                 </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         </div>
 
-        {/* 快速联系 */}
+        {/* 常见问题 */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="bg-white rounded-3xl p-8 md:p-12 border border-gray-200 shadow-sm"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="mb-16"
         >
-          <div className="max-w-3xl mx-auto text-center">
-            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-              让我们一起创造价值
-            </h3>
-            <p className="text-gray-600 mb-8">
-              如果您对我的技能和经验感兴趣，或者有任何合作机会，欢迎通过以上方式与我联系。
-              我会在 24 小时内回复您的消息。
+          <h3 className="text-xl font-semibold text-foreground mb-8 text-center">常见问题</h3>
+          <div className="grid md:grid-cols-3 gap-5">
+            {faq.map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, delay: i * 0.1, ease: "easeOut" }}
+                whileHover={{ y: -8, scale: 1.03 }}
+                className="card p-6 hover-glow"
+              >
+                <h4 className="text-base font-semibold text-foreground mb-3">{item.q}</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">{item.a}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="card-flat p-10 md:p-14 text-center mb-16 bg-foreground text-white noise relative overflow-hidden hover-glow"
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-foreground via-foreground to-foreground/90" />
+          <div className="relative z-10">
+            <h3 className="heading-display text-3xl md:text-4xl mb-4">让我们一起创造价值</h3>
+            <p className="text-white/60 text-base mb-10 max-w-lg mx-auto">
+              如果您对我的技能和经验感兴趣，欢迎随时联系我。<br />
+              我通常在 24 小时内回复。
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.a
                 href="mailto:yunjie.cloud@example.com"
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.1, y: -4 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 rounded-xl bg-gradient-to-r from-primary to-accent text-white font-semibold shadow-lg hover:shadow-xl transition-all inline-flex items-center justify-center gap-2"
+                className="px-10 py-4 rounded-full bg-white text-foreground font-medium text-base inline-flex items-center justify-center gap-2 hover:bg-white/90 transition-colors"
               >
-                <Mail className="w-5 h-5" />
-                发送邮件
+                <Mail className="w-5 h-5" /> 发送邮件
               </motion.a>
               <motion.button
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.1, y: -4 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => handleCopy("YunJie_Cloud", "微信")}
-                className="px-8 py-4 rounded-xl bg-white border-2 border-gray-200 text-gray-900 font-semibold hover:border-primary hover:text-primary transition-all inline-flex items-center justify-center gap-2"
+                className="px-10 py-4 rounded-full bg-white/10 border border-white/20 text-white font-medium text-base hover:bg-white/20 transition-all inline-flex items-center justify-center gap-2"
               >
-                <MessageSquare className="w-5 h-5" />
-                复制微信号
+                <MessageSquare className="w-5 h-5" /> 复制微信号
               </motion.button>
             </div>
           </div>
         </motion.div>
 
-        {/* 页脚 */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-          className="mt-20 pt-8 border-t border-gray-200 text-center space-y-4"
-        >
-          <div className="flex items-center justify-center gap-6 text-sm text-gray-600">
-            <a href="#home" className="hover:text-primary transition-colors">首页</a>
-            <a href="#education" className="hover:text-primary transition-colors">教育</a>
-            <a href="#skills" className="hover:text-primary transition-colors">技能</a>
-            <a href="#projects" className="hover:text-primary transition-colors">项目</a>
-            <a href="#contact" className="hover:text-primary transition-colors">联系</a>
+        {/* Footer */}
+        <footer className="pt-10 border-t border-border">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-5">
+            <div className="flex items-center gap-4">
+              <span className="text-xl font-display font-semibold">
+                YJ<span className="gradient-text-accent">.</span>
+              </span>
+              <span className="text-border">|</span>
+              <span className="text-sm text-muted-foreground">&copy; 2026 张云阶</span>
+            </div>
+            <div className="flex items-center gap-5 text-sm">
+              {["首页", "教育", "技能", "项目", "联系"].map((label, i) => (
+                <a
+                  key={i}
+                  href={`#${["home", "education", "skills", "projects", "contact"][i]}`}
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {label}
+                </a>
+              ))}
+            </div>
+            <div className="flex items-center gap-4">
+              <span className="flex items-center gap-2 text-xs text-muted-foreground font-mono">
+                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                Next.js + Tailwind + Framer Motion + GSAP
+              </span>
+              <motion.button
+                whileHover={{ scale: 1.15, y: -3 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={scrollToTop}
+                className="p-3 rounded-xl border border-border text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+              >
+                <ArrowUp className="w-4 h-4" />
+              </motion.button>
+            </div>
           </div>
-          <p className="text-gray-600">
-            © 2026 张云阶 (Zhang Yunjie). All rights reserved.
-          </p>
-          <p className="text-gray-500 text-sm">
-            Built with ❤️ using Next.js, Tailwind CSS & Framer Motion
-          </p>
-          <div className="flex items-center justify-center gap-2 text-primary text-sm font-mono">
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            Cloud Native · DevOps · Full-Stack
-          </div>
-        </motion.div>
+        </footer>
       </div>
     </section>
   );

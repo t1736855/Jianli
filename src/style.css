@@ -7,13 +7,27 @@
   --foreground: #1a1a1a;
   --card-bg: #ffffff;
   --border-color: #e5e5e5;
+  
+  /* 精美渐变色 - 优雅蓝绿色系 */
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-accent: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --gradient-cyan: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --gradient-violet: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  --gradient-sunset: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  --gradient-ocean: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
 }
 
 .dark {
-  --background: #121212;
+  --background: #0f0f0f;
   --foreground: #ffffff;
-  --card-bg: #1e1e1e;
+  --card-bg: #1a1a1a;
   --border-color: #2a2a2a;
+  
+  /* 暗色主题渐变 */
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-accent: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --gradient-cyan: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --gradient-violet: linear-gradient(135deg, #c471f5 0%, #fa71cd 100%);
 }
 
 * {
@@ -32,6 +46,7 @@ body {
   font-family: "Inter", "SF Pro Display", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 @layer utilities {
@@ -39,27 +54,46 @@ body {
     text-wrap: balance;
   }
   
+  /* 升级的玻璃效果 */
   .glass-effect {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08),
+                0 0 0 1px rgba(255, 255, 255, 0.5) inset;
   }
   
   .dark .glass-effect {
-    background: rgba(30, 30, 30, 0.8);
+    background: rgba(26, 26, 26, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.05) inset;
   }
   
+  /* 多彩渐变文字 */
   .gradient-text {
-    background: linear-gradient(135deg, #0070f3 0%, #00d4ff 100%);
+    background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   
+  .gradient-text-pink {
+    background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .gradient-text-cyan {
+    background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* 光晕效果 */
   .shine-effect {
     position: relative;
     overflow: hidden;
@@ -75,13 +109,68 @@ body {
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.3),
       transparent
     );
-    transition: left 0.5s;
+    transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   .shine-effect:hover::before {
     left: 100%;
+  }
+  
+  /* 浮动动画 */
+  .floating {
+    animation: floating 3s ease-in-out infinite;
+  }
+  
+  @keyframes floating {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+  
+  /* 脉冲光晕 */
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(102, 126, 234, 0.8);
+    }
+  }
+  
+  /* 卡片悬停效果 */
+  .card-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .card-hover:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* 背景渐变 */
+  .bg-gradient-primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  }
+  
+  .bg-gradient-accent {
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+  }
+  
+  .bg-gradient-cyan {
+    background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
+  }
+  
+  .bg-gradient-sunset {
+    background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
   }
 }
