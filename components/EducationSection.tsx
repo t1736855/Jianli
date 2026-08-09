@@ -110,9 +110,9 @@ export default function EducationSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="lg:col-span-2 card-flat p-8 hover-glow"
+            className="lg:col-span-2 card-flat p-5 sm:p-8 hover-glow"
           >
-            <div className="flex items-start gap-5 mb-8">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4 sm:gap-5 mb-6 sm:mb-8">
               <motion.div
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 className="w-16 h-16 rounded-xl bg-gradient-accent flex items-center justify-center flex-shrink-0 shadow-xl"
@@ -120,21 +120,21 @@ export default function EducationSection() {
                 <GraduationCap className="w-8 h-8 text-white" />
               </motion.div>
               <div className="flex-1">
-                <h3 className="text-2xl font-semibold text-foreground mb-2">{education.school}</h3>
-                <p className="text-muted-foreground text-base mb-4">{education.englishName}</p>
-                <div className="flex flex-wrap gap-3">
-                  <span className="px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-medium">{education.major}</span>
-                  <span className="px-4 py-1.5 rounded-full bg-muted text-muted-foreground text-sm inline-flex items-center gap-1.5">
+                <h3 className="text-xl sm:text-2xl font-semibold text-foreground mb-2">{education.school}</h3>
+                <p className="text-muted-foreground text-sm sm:text-base mb-4">{education.englishName}</p>
+                <div className="flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-3">
+                  <span className="px-3 sm:px-4 py-1.5 rounded-full bg-accent/10 text-accent text-xs sm:text-sm font-medium">{education.major}</span>
+                  <span className="px-3 sm:px-4 py-1.5 rounded-full bg-muted text-muted-foreground text-xs sm:text-sm inline-flex items-center gap-1.5">
                     <Calendar className="w-3.5 h-3.5" /> {education.period}
                   </span>
-                  <span className="px-4 py-1.5 rounded-full bg-muted text-muted-foreground text-sm inline-flex items-center gap-1.5">
+                  <span className="px-3 sm:px-4 py-1.5 rounded-full bg-muted text-muted-foreground text-xs sm:text-sm inline-flex items-center gap-1.5">
                     <MapPin className="w-3.5 h-3.5" /> {education.location}
                   </span>
                 </div>
               </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
               {[
                 { label: "GPA", value: education.gpa, icon: "📊" },
                 { label: "排名", value: education.rank, icon: "🏆" },

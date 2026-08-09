@@ -213,7 +213,7 @@ function Floating3DElements() {
   ];
 
   return (
-    <div ref={containerRef} className="absolute inset-0 pointer-events-none" style={{ perspective: "1000px" }}>
+    <div ref={containerRef} className="absolute inset-0 pointer-events-none hidden sm:block" style={{ perspective: "1000px" }}>
       {elements.map((el, i) => (
         <div
           key={i}
@@ -489,12 +489,12 @@ export default function HeroSection() {
 
             {/* 名字 */}
             <div className="space-y-5">
-              <h1 className="hero-title heading-display text-[clamp(3.5rem,12vw,8rem)] text-foreground">
+              <h1 className="hero-title heading-display text-[clamp(2.5rem,10vw,8rem)] text-foreground">
                 <span className="gradient-text-accent" style={{ textShadow: "0 0 60px rgba(37, 99, 235, 0.3)" }}>
                   张云阶
                 </span>
               </h1>
-              <p className="hero-subtitle heading-display text-[clamp(1.5rem,4vw,3rem)] text-muted-foreground">
+              <p className="hero-subtitle heading-display text-[clamp(1.25rem,4vw,3rem)] text-muted-foreground">
                 Zhang Yunjie
               </p>
             </div>
@@ -518,37 +518,37 @@ export default function HeroSection() {
             </div>
 
             {/* 简介 */}
-            <div className="hero-bio max-w-3xl mx-auto space-y-4">
-              <p className="text-foreground/90 text-xl leading-relaxed">
+            <div className="hero-bio max-w-3xl mx-auto space-y-4 px-2 sm:px-0">
+              <p className="text-foreground/90 text-base sm:text-xl leading-relaxed">
                 深耕云原生领域的准工程师，专注于容器化、微服务架构与自动化运维。
               </p>
-              <p className="text-muted-foreground text-lg leading-relaxed">
+              <p className="text-muted-foreground text-sm sm:text-lg leading-relaxed">
                 擅长 Kubernetes 集群优化、Serverless 架构设计、CI/CD 流水线构建。
               </p>
             </div>
 
             {/* 联系信息 */}
-            <div className="hero-contact flex flex-wrap justify-center gap-8">
+            <div className="hero-contact flex flex-col sm:flex-row flex-wrap justify-center items-center gap-4 sm:gap-8">
               {[
                 { icon: MapPin, label: "Location", value: "中国 · 重庆" },
                 { icon: Mail, label: "Email", value: "yunjie.cloud@example.com" },
               ].map((item) => (
-                <div key={item.label} className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-accent flex items-center justify-center shadow-xl">
-                    <item.icon className="w-6 h-6 text-white" />
+                <div key={item.label} className="flex items-center gap-3 sm:gap-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-accent flex items-center justify-center shadow-xl flex-shrink-0">
+                    <item.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
-                  <div className="text-left">
+                  <div className="text-left min-w-0">
                     <div className="text-xs text-muted-foreground font-mono uppercase tracking-wider">
                       {item.label}
                     </div>
-                    <div className="text-base text-foreground font-medium">{item.value}</div>
+                    <div className="text-sm sm:text-base text-foreground font-medium break-all sm:break-normal">{item.value}</div>
                   </div>
                 </div>
               ))}
             </div>
 
             {/* 统计数据 */}
-            <div className="grid grid-cols-3 gap-6 max-w-lg mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-lg mx-auto">
               {[
                 { icon: Award, label: "国家励志奖学金", value: "2024" },
                 { icon: Briefcase, label: "项目经验", value: "8+", num: 8, suffix: "+" },
@@ -557,13 +557,13 @@ export default function HeroSection() {
                 <motion.div
                   key={item.label}
                   whileHover={{ y: -10, scale: 1.08, rotateY: 5 }}
-                  className="hero-stat card-glow p-5 text-center"
+                  className="hero-stat card-glow p-4 sm:p-5 text-center"
                   style={{ transformPerspective: "1000px" }}
                 >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-accent flex items-center justify-center mx-auto mb-3 shadow-xl">
-                    <item.icon className="w-6 h-6 text-white" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-accent flex items-center justify-center mx-auto mb-2 sm:mb-3 shadow-xl">
+                    <item.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
-                  <div className="text-2xl font-semibold text-foreground">
+                  <div className="text-xl sm:text-2xl font-semibold text-foreground">
                     {item.num ? <AdvancedCounter target={item.num} suffix={item.suffix} /> : item.value}
                   </div>
                   <div className="text-xs text-muted-foreground">{item.label}</div>

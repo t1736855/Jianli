@@ -107,9 +107,9 @@ export default function AboutSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="lg:col-span-3 card-flat p-8 hover-glow"
+            className="lg:col-span-3 card-flat p-5 sm:p-8 hover-glow"
           >
-            <div className="flex items-start gap-5 mb-8">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4 sm:gap-5 mb-6 sm:mb-8">
               <motion.div
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 className="w-20 h-20 rounded-2xl bg-gradient-accent text-white flex items-center justify-center text-3xl font-display font-semibold flex-shrink-0 shadow-xl"
@@ -119,7 +119,7 @@ export default function AboutSection() {
               <div>
                 <h3 className="text-2xl font-semibold text-foreground mb-2">张云阶</h3>
                 <p className="text-muted-foreground text-base">云计算技术应用 · 重庆商务职业学院</p>
-                <div className="flex gap-2 mt-3">
+                <div className="flex flex-wrap justify-center sm:justify-start gap-2 mt-3">
                   <span className="px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-medium">云计算</span>
                   <span className="px-3 py-1 rounded-full bg-purple-500/10 text-purple-600 text-xs font-medium">DevOps</span>
                   <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 text-xs font-medium">云原生</span>
