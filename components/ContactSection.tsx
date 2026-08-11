@@ -71,9 +71,9 @@ export default function ContactSection() {
           >
             <div className="card p-6">
               <div className="w-14 h-14 rounded-2xl bg-blue-600/20 border border-blue-500/30 text-blue-400 flex items-center justify-center text-xl font-bold mb-4">
-                张
+                李
               </div>
-              <h3 className="text-xl font-bold text-foreground mb-1">张云阶</h3>
+              <h3 className="text-xl font-bold text-foreground mb-1">李洪斌</h3>
               <p className="text-xs font-mono text-muted-foreground mb-4">云计算技术应用 · 重庆商务职业学院</p>
 
               <div className="space-y-3 pt-3 border-t border-white/5">

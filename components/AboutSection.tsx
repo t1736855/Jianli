@@ -73,10 +73,10 @@ export default function AboutSection() {
             <div>
               <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-5 mb-6">
                 <div className="w-16 h-16 rounded-2xl bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center text-2xl font-bold flex-shrink-0 shadow-sm">
-                  张
+                  李
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-1">张云阶</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-1">李洪斌</h3>
                   <p className="text-gray-500 text-sm font-mono">云计算技术应用 · 重庆商务职业学院</p>
                   <div className="flex flex-wrap justify-center sm:justify-start gap-2 mt-3">
                     <span className="tag">云计算</span>

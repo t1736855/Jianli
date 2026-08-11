@@ -133,10 +133,10 @@ export default function HeroSection() {
           {/* 名字 */}
           <div className="space-y-4">
             <h1 className="hero-title heading-display text-[clamp(3rem,8vw,6.5rem)] text-gray-900 tracking-tight">
-              <span className="gradient-text-accent">张云阶</span>
+              <span className="gradient-text-accent">李洪斌</span>
             </h1>
             <p className="hero-subtitle text-[clamp(1.1rem,2.5vw,2rem)] text-gray-500 font-light tracking-wide">
-              Zhang Yunjie
+              Li Hongbin
             </p>
           </div>
 
