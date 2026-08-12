@@ -133,11 +133,11 @@ export default function HeroSection() {
   ];
 
   const highlightsTags = [
-    { label: "Kubernetes", icon: Cpu },
-    { label: "Docker 容器化", icon: Layers },
-    { label: "CI/CD 流水线", icon: Terminal },
-    { label: "华为 ICT 大赛一等奖", icon: Trophy },
-    { label: "Linux / Go / Python", icon: Code2 },
+    { label: "KaiwuDB 数据库专家(KWCE)", icon: ShieldCheck },
+    { label: "Kubernetes 集群编排", icon: Cpu },
+    { label: "全国创新创业大赛一等奖", icon: Trophy },
+    { label: "华为数通/AI微认证", icon: Award },
+    { label: "Linux / Go / Node.js", icon: Code2 },
   ];
 
   return (
